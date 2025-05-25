@@ -1,8 +1,15 @@
 import express, {Express, Request, Response} from 'express';
+import dotenv from 'dotenv';
+dotenv.config();
+import connectAdmin from './config/admin_db';
+
+
 
 
 
 const app:Express = express();
+connectAdmin()
+
 
 app.get('/', (req: Request, res: Response) => { 
   res.send('Hello World!');

@@ -2,16 +2,27 @@ import mongoose from 'mongoose';
 
 
 const connectAdmin = async () => {
-    mongoose.connection.on("connected", () => {
-        console.log("Admin database connected successfully");
 
-    });
-    mongoose.connection.on("error", (err) => {
-        console.log("Error connecting to admin database", err);
-    });
-
-    await mongoose.connect(`${process.env.MONGODB_URL}/Scent_haven`)
+    try {
+        const conn = await mongoose.connect(`${process.env.MONGODB_URL}/Scent_haven`)
+        console.log(`MongoDB Connected: ${conn.connection.host}`)
+    } catch (error) {
+        console.error("Error connecting to mongo database:", error);
+        process.exit(1)
+    }
 }
+
+ mongoose.connection.on("connected", ()=> {
+    console.log("Admin Database connected successfully")
+ })
+
+ mongoose.connection.on("error", (err) => {
+    console.error("Error connected to admin database:", err)
+ })
+
+ mongoose.connection.on("disconnected", ()=> {
+    console.log("Admin database disconnected")
+ })
 
 export default connectAdmin;
 

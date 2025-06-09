@@ -14,7 +14,7 @@ export const loginAdmin:RequestHandler = async (req: Request, res: Response):Pro
         const admin = await Admin.findOne({ username }) as IAdmin | null;
 
         if (!admin) {
-            res.status(200).json({ message: 'Admin not found' });
+            res.status(401).json({ message: 'Admin not found' });
             return;
         }
         const isPasswordCorrect = await admin.comparePassword(password);
@@ -42,3 +42,13 @@ export const loginAdmin:RequestHandler = async (req: Request, res: Response):Pro
          res.status(500).json({ message: 'Internal server error' });
     }
 };
+
+export const logoutAdmin: RequestHandler = async (req: AuthRequest, res: Response): Promise<void> => {
+    try {
+        res.status(200).json({ message: 'Logout successful' });
+    } catch (error) {
+        console.error('Logout error:', error);
+        res.status(500).json({ message: 'Internal server error' });
+        
+    }
+}

@@ -17,7 +17,6 @@ const createAdmin = async () => {
           const existingAdmin = await Admin.findOne({ email: 'gabbyduah055@gmail.com' });
         if (existingAdmin) {
             console.log('Admin already exists');
-            process.exit(0);
         }
 
 
@@ -30,10 +29,8 @@ const createAdmin = async () => {
             
             await newAdmin.save();
             console.log('Admin created successfully');
-            process.exit(0);
     } catch (error) {
         console.error('Error creating admin:', error);
-        process.exit(1);
         
     }
             
